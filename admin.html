@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Fada das Unhas Esmalteria</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <main class="admin-page">
+    <section class="admin-shell">
+      <div class="admin-header">
+        <div>
+          <p class="eyebrow">Painel administrativo</p>
+          <h1>Fada das Unhas Esmalteria</h1>
+          <p class="sub">
+            Gerencie agendamentos, status, bloqueios de agenda e acompanhe o faturamento com mais controle.
+          </p>
+        </div>
+        <button id="btnLogout" class="ghost-btn hidden">Sair</button>
+      </div>
+
+      <section id="loginCard" class="card">
+        <h2>Entrar no painel</h2>
+
+        <div class="field">
+          <label for="adminEmail">E-mail</label>
+          <input type="email" id="adminEmail" placeholder="Digite seu e-mail" />
+        </div>
+
+        <div class="field">
+          <label for="adminSenha">Senha</label>
+          <input type="password" id="adminSenha" placeholder="Digite sua senha" />
+        </div>
+
+        <p id="loginErro" class="error-text"></p>
+
+        <button id="btnLogin" class="primary-btn">Entrar</button>
+      </section>
+
+      <section id="painelCard" class="card hidden">
+        <section class="faturamento-shell">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Financeiro</p>
+              <h2>Controle de faturamento</h2>
+              <p class="section-sub">
+                Visualize o valor faturado por período com base apenas nos atendimentos confirmados.
+              </p>
+            </div>
+          </div>
+
+          <div class="faturamento-toolbar">
+            <div class="field">
+              <label for="modoFaturamento">Visualizar</label>
+              <select id="modoFaturamento">
+                <option value="diario">Faturamento diário</option>
+                <option value="semanal">Faturamento semanal</option>
+                <option value="mensal">Faturamento mensal</option>
+              </select>
+            </div>
+
+            <div class="field" id="campoFaturamentoData">
+              <label for="faturamentoData">Escolha o dia</label>
+              <input type="date" id="faturamentoData" />
+            </div>
+
+            <div class="field hidden" id="campoFaturamentoSemana">
+              <label for="faturamentoSemana">Escolha a semana</label>
+              <input type="week" id="faturamentoSemana" />
+            </div>
+
+            <div class="field hidden" id="campoFaturamentoMes">
+              <label for="faturamentoMes">Escolha o mês</label>
+              <input type="month" id="faturamentoMes" />
+            </div>
+          </div>
+
+          <div class="faturamento-grid">
+            <article class="fat-card fat-card-highlight">
+              <span class="fat-label" id="fatTituloPeriodo">Faturamento do dia</span>
+              <strong class="fat-valor" id="fatValorPeriodo">R$ 0,00</strong>
+              <p class="fat-meta" id="fatDescricaoPeriodo">Nenhum período selecionado.</p>
+            </article>
+
+            <article class="fat-card">
+              <span class="fat-label">Atendimentos confirmados</span>
+              <strong class="fat-valor fat-valor-menor" id="fatQuantidade">0</strong>
+              <p class="fat-meta">Total de atendimentos confirmados no período.</p>
+            </article>
+
+            <article class="fat-card">
+              <span class="fat-label">Ticket médio</span>
+              <strong class="fat-valor fat-valor-menor" id="fatTicketMedio">R$ 0,00</strong>
+              <p class="fat-meta">Média de valor por atendimento confirmado.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="bloqueio-shell">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Agenda</p>
+              <h2>Bloqueio de datas</h2>
+              <p class="section-sub">
+                Bloqueie dias específicos para que não apareçam para as clientes no agendamento.
+              </p>
+            </div>
+          </div>
+
+          <div class="bloqueio-toolbar">
+            <div class="field">
+              <label for="dataBloqueio">Escolha a data</label>
+              <input type="date" id="dataBloqueio" />
+            </div>
+
+            <div class="bloqueio-actions">
+              <button id="btnBloquearData" class="primary-btn">Bloquear dia</button>
+              <button id="btnDesbloquearData" class="ghost-btn">Desbloquear dia</button>
+            </div>
+          </div>
+
+          <p id="bloqueioMensagem" class="feedback-text"></p>
+
+          <div class="datas-bloqueadas-box">
+            <h3>Datas bloqueadas</h3>
+            <div id="listaDatasBloqueadas" class="lista-datas-bloqueadas"></div>
+          </div>
+        </section>
+
+        <section class="agendamentos-shell">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Operacional</p>
+              <h2>Agendamentos</h2>
+              <p class="section-sub">
+                Filtre, revise e atualize o status de cada atendimento.
+              </p>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="field">
+              <label for="filtroData">Filtrar por data</label>
+              <input type="date" id="filtroData" />
+            </div>
+
+            <div class="field">
+              <label for="filtroStatus">Filtrar por status</label>
+              <select id="filtroStatus">
+                <option value="">Todos</option>
+                <option value="pendente">Pendente</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="summary">
+            <div class="summary-box">
+              <span>Total</span>
+              <strong id="totalAgendamentos">0</strong>
+            </div>
+            <div class="summary-box">
+              <span>Pendentes</span>
+              <strong id="totalPendentes">0</strong>
+            </div>
+            <div class="summary-box">
+              <span>Confirmados</span>
+              <strong id="totalConfirmados">0</strong>
+            </div>
+            <div class="summary-box">
+              <span>Cancelados</span>
+              <strong id="totalCancelados">0</strong>
+            </div>
+          </div>
+
+          <div id="listaAgendamentos" class="lista-agendamentos"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
